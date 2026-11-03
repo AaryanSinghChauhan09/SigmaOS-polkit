@@ -1,31 +1,44 @@
-// SPDX-License-Identifier: Apache-2.0
-//! SigmaOS-polkit - System utility component
-//! Part of SigmaOS multi-repository architecture
+//! SigmaOS-polkit - SigmaOS Component
+//!
+//! Essential infrastructure component for SigmaOS.
 
-#![no_std]
+use anyhow::Result;
+use log::{info, error};
+use serde::{Deserialize, Serialize};
 
-/// Component
-pub struct Component {
-    name: &'static str,
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Config {
+    pub enabled: bool,
+    pub debug: bool,
 }
 
-impl Component {
-    pub fn new() -> Self {
-        Self { name: "SigmaOS-polkit" }
-    }
-}
-
-impl Default for Component {
+impl Default for Config {
     fn default() -> Self {
-        Self::new()
+        Self { enabled: true, debug: false }
     }
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_creation() {
-        let c = super::Component::new();
-        assert_eq!(c.name, "SigmaOS-polkit");
+pub struct polkit {
+    config: Config,
+}
+
+impl polkit {
+    pub fn new(config: Config) -> Self {
+        Self { config }
+    }
+
+    pub fn initialize(&mut self) -> Result<()> {
+        info!("Initializing SigmaOS-polkit");
+        Ok(())
+    }
+
+    pub fn start(&mut self) -> Result<()> {
+        info!("Starting SigmaOS-polkit");
+        Ok(())
+    }
+
+    pub fn stop(&mut self) -> Result<()> {
+        info!("Stopping SigmaOS-polkit");
+        Ok(())
     }
 }
